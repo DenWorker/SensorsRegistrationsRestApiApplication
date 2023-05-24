@@ -1,4 +1,4 @@
-package com.example.SensorsRegistrationsRestAPI.util;
+package com.example.SensorsRegistrationsRestAPI.utilSensors;
 
 public class SensorNotCreatedException extends RuntimeException{
     public SensorNotCreatedException(String message) {

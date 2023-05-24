@@ -3,10 +3,10 @@ package com.example.SensorsRegistrationsRestAPI.controllers;
 import com.example.SensorsRegistrationsRestAPI.dto.SensorDTO;
 import com.example.SensorsRegistrationsRestAPI.models.Sensor;
 import com.example.SensorsRegistrationsRestAPI.services.SensorsService;
-import com.example.SensorsRegistrationsRestAPI.util.SensorErrorResponse;
-import com.example.SensorsRegistrationsRestAPI.util.SensorNotCreatedException;
-import com.example.SensorsRegistrationsRestAPI.util.SensorNotFoundException;
-import com.example.SensorsRegistrationsRestAPI.util.SensorValidator;
+import com.example.SensorsRegistrationsRestAPI.utilSensors.SensorErrorResponse;
+import com.example.SensorsRegistrationsRestAPI.utilSensors.SensorNotCreatedException;
+import com.example.SensorsRegistrationsRestAPI.utilSensors.SensorNotFoundException;
+import com.example.SensorsRegistrationsRestAPI.utilSensors.SensorValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,6 @@ public class SensorsController {
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> createSensor(@RequestBody @Valid SensorDTO sensorDTO,
                                                    BindingResult bindingResult){
-
-
         sensorValidator.validate(convertToSensor(sensorDTO),bindingResult);
         if (bindingResult.hasErrors()){
             StringBuilder errorsMsg = new StringBuilder();
@@ -60,6 +58,8 @@ public class SensorsController {
         sensorsService.save(convertToSensor(sensorDTO));
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////
 
     @ExceptionHandler
     private ResponseEntity<SensorErrorResponse> handleException(SensorNotFoundException exception) {

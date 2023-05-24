@@ -1,28 +1,31 @@
 package com.example.SensorsRegistrationsRestAPI.dto;
 
 import com.example.SensorsRegistrationsRestAPI.models.Sensor;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 
 
-public class MeasurumentDTO {
+public class MeasurementDTO {
 
-    @NotEmpty(message = "Value should not be empty!")
-    @Size(min = -100, max = 100, message = "Value should be between -100 and 100 characters!")
+    @NotNull(message = "Value should not be empty!")
+    @DecimalMin(value = "-100.0")
+    @DecimalMax(value = "100.0")
     private double value;
 
-    @NotEmpty(message = "Raining should not be empty!")
+    @NotNull(message = "Raining should not be empty!")
     private boolean raining;
 
-
-    @NotEmpty(message = "Sensor should not be empty!")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @NotNull(message = "Sensor should not be empty!")
     private Sensor sensor;
 
     public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

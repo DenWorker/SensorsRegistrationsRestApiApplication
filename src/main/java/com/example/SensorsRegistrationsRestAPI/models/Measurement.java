@@ -1,8 +1,12 @@
 package com.example.SensorsRegistrationsRestAPI.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 
 import java.time.LocalDateTime;
 
@@ -16,20 +20,22 @@ public class Measurement {
     private int id;
 
     @Column(name = "value")
-    @NotEmpty(message = "Value should not be empty!")
-    @Size(min = -100, max = 100, message = "Value should be between -100 and 100 characters!")
+    @NotNull(message = "Value should not be empty!")
+    @DecimalMin(value = "-100.0")
+    @DecimalMax(value = "100.0")
     private double value;
 
     @Column(name = "raining")
-    @NotEmpty(message = "Raining should not be empty!")
+    @NotNull(message = "Raining should not be empty!")
     private boolean raining;
 
     @Column(name = "measurement_time")
     private LocalDateTime measurementTime;
 
-    @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne()
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    @NotEmpty(message = "Sensor should not be empty!")
+    @NotNull(message = "Sensor should not be empty!")
     private Sensor sensor;
 
     public Measurement() {

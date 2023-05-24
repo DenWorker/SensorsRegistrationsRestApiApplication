@@ -1,5 +1,7 @@
 package com.example.SensorsRegistrationsRestAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -27,6 +29,7 @@ public class Sensor {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "sensor")
     private List<Measurement> measurementList;
 
