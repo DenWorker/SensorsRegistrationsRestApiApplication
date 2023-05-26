@@ -37,7 +37,7 @@ public class SensorsRegistrationsRestApiApplication {
         //List<MeasurementDTO> measurementDTOList = getMeasurementsFromServer();
         //System.out.println(measurementDTOList);
 
-        createGraphic(getMeasurementsFromServerNotDTO());
+        createGraphicOfSensorOnID(getMeasurementsFromServerNotDTO(), 8);
     }
 
     private static void sensorsPost() {
@@ -104,16 +104,16 @@ public class SensorsRegistrationsRestApiApplication {
         return responseEntity.getBody();
     }
 
-    private static void createGraphic(List<Measurement> measurementList) throws IOException {
+    private static void createGraphicOfSensorOnID(List<Measurement> measurementList, int id) throws IOException {
         List<Long> xData = new ArrayList<>();
         List<Double> yData = new ArrayList<>();
 
-        measurementList.forEach(t -> {
+        measurementList.stream().filter(t -> t.getSensor().getId() == id).forEach(t -> {
             xData.add(t.getMeasurementTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             yData.add(t.getValue());
         });
 
-        XYChart chart = new XYChartBuilder().width(2000).height(600).title("График зависимости температуры от времени").xAxisTitle("X (milliSec)").yAxisTitle("Y (t)").build();
+        XYChart chart = new XYChartBuilder().width(2000).height(600).title("График зависимости температуры от времени датчика с id " + id).xAxisTitle("X (milliSec)").yAxisTitle("Y (t)").build();
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         chart.addSeries("Данные", xData, yData).setLineStyle(SeriesLines.DOT_DOT);
 
