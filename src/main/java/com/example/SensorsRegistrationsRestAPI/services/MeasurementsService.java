@@ -21,21 +21,21 @@ public class MeasurementsService {
         this.measurementsRepository = measurementsRepository;
     }
 
-    public List<Measurement> findAll(){
+    public List<Measurement> findAll() {
         return measurementsRepository.findAll();
     }
 
-    public Measurement findById(int id){
+    public Measurement findById(int id) {
         return measurementsRepository.findById(id).orElseThrow(MeasurementNotFoundException::new);
     }
 
     @Transactional
-    public void save(Measurement measurement){
+    public void save(Measurement measurement) {
         enrichMeasurement(measurement);
         measurementsRepository.save(measurement);
     }
 
-    private void enrichMeasurement(Measurement measurement){
+    private void enrichMeasurement(Measurement measurement) {
         measurement.setMeasurementTime(LocalDateTime.now());
     }
 }

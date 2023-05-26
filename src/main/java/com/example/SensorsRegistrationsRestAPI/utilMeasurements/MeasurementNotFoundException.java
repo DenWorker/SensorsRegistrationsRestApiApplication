@@ -1,4 +1,4 @@
 package com.example.SensorsRegistrationsRestAPI.utilMeasurements;
 
-public class MeasurementNotFoundException extends RuntimeException{
+public class MeasurementNotFoundException extends RuntimeException {
 }

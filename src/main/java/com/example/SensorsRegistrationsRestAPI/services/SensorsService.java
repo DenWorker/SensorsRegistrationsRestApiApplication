@@ -21,29 +21,29 @@ public class SensorsService {
         this.sensorsRepository = sensorsRepository;
     }
 
-    public List<Sensor> findAll(){
+    public List<Sensor> findAll() {
         return sensorsRepository.findAll();
     }
 
-    public Sensor findOne(int id){
+    public Sensor findOne(int id) {
         return sensorsRepository.findById(id).orElseThrow(SensorNotFoundException::new);
     }
 
-    public Optional<Sensor> findById(int id){
+    public Optional<Sensor> findById(int id) {
         return sensorsRepository.findById(id);
     }
 
-    public boolean hasSensor(String name){
+    public boolean hasSensor(String name) {
         return sensorsRepository.findByName(name).isPresent();
     }
 
     @Transactional
-    public void save(Sensor sensor){
+    public void save(Sensor sensor) {
         enrichSensor(sensor);
         sensorsRepository.save(sensor);
     }
 
-    private void enrichSensor(Sensor sensor){
+    private void enrichSensor(Sensor sensor) {
         sensor.setCreatedAt(LocalDateTime.now());
         sensor.setUpdateAt(LocalDateTime.now());
     }

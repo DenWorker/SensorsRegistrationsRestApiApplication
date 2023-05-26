@@ -1,4 +1,4 @@
 package com.example.SensorsRegistrationsRestAPI.utilSensors;
 
-public class SensorNotFoundException extends RuntimeException{
+public class SensorNotFoundException extends RuntimeException {
 }

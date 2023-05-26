@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MeasurementsRepository extends JpaRepository <Measurement, Integer> {
+public interface MeasurementsRepository extends JpaRepository<Measurement, Integer> {
     Optional<Measurement> findById(int id);
 }
