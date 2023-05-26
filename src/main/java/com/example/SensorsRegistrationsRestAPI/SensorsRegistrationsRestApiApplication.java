@@ -3,6 +3,8 @@ package com.example.SensorsRegistrationsRestAPI;
 import com.example.SensorsRegistrationsRestAPI.dto.MeasurementDTO;
 import com.example.SensorsRegistrationsRestAPI.models.Measurement;
 import com.example.SensorsRegistrationsRestAPI.models.Sensor;
+import org.knowm.xchart.*;
+import org.knowm.xchart.style.lines.SeriesLines;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +26,7 @@ public class SensorsRegistrationsRestApiApplication {
     private static final RestTemplate response = new RestTemplate();
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SpringApplication.run(SensorsRegistrationsRestApiApplication.class, args);
         System.out.println("Hello world!");
 
@@ -30,8 +34,10 @@ public class SensorsRegistrationsRestApiApplication {
         //List<Sensor> sensorList = getSensorsFromServer();
 
         //measurementPost(getSensorsFromServer());
-        List<MeasurementDTO> measurementDTOList = getMeasurementsFromServer();
-        System.out.println(measurementDTOList);
+        //List<MeasurementDTO> measurementDTOList = getMeasurementsFromServer();
+        //System.out.println(measurementDTOList);
+
+        createGraphic(getMeasurementsFromServerNotDTO());
     }
 
     private static void sensorsPost() {
@@ -65,7 +71,7 @@ public class SensorsRegistrationsRestApiApplication {
         }
     }
 
-    private static List<Sensor> getSensorsFromServer() {
+    private static List<Sensor> getSensorsFromServerNotDTO() {
         ResponseEntity<List<Sensor>> responseEntity = response.exchange(
                 "http://localhost:8080/sensors/notDTO",
                 HttpMethod.GET,
@@ -88,14 +94,31 @@ public class SensorsRegistrationsRestApiApplication {
         }
     }
 
-    private static List<MeasurementDTO> getMeasurementsFromServer() {
-        ResponseEntity<List<MeasurementDTO>> responseEntity = response.exchange(
-                "http://localhost:8080/measurements",
+    private static List<Measurement> getMeasurementsFromServerNotDTO() {
+        ResponseEntity<List<Measurement>> responseEntity = response.exchange(
+                "http://localhost:8080/measurements/notDTO",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<MeasurementDTO>>() {
+                new ParameterizedTypeReference<List<Measurement>>() {
                 });
         return responseEntity.getBody();
+    }
+
+    private static void createGraphic(List<Measurement> measurementList) throws IOException {
+        List<Long> xData = new ArrayList<>();
+        List<Double> yData = new ArrayList<>();
+
+        measurementList.forEach(t -> {
+            xData.add(t.getMeasurementTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+            yData.add(t.getValue());
+        });
+
+        XYChart chart = new XYChartBuilder().width(2000).height(600).title("График зависимости температуры от времени").xAxisTitle("X (milliSec)").yAxisTitle("Y (t)").build();
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        chart.addSeries("Данные", xData, yData).setLineStyle(SeriesLines.DOT_DOT);
+
+
+        BitmapEncoder.saveBitmap(chart, "C:\\Users\\ivano\\desktop\\chart.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
 
