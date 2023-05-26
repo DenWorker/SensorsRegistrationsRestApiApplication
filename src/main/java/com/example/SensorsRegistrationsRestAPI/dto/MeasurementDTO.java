@@ -21,6 +21,15 @@ public class MeasurementDTO {
     @NotNull(message = "Sensor should not be empty!")
     private Sensor sensor;
 
+    public MeasurementDTO(double value, boolean raining, Sensor sensor) {
+        this.value = value;
+        this.raining = raining;
+        this.sensor = sensor;
+    }
+
+    public MeasurementDTO() {
+    }
+
     public double getValue() {
         return value;
     }
@@ -43,5 +52,14 @@ public class MeasurementDTO {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" +
+                "sensor=" + sensor +
+                ", value=" + value +
+                ", raining=" + raining +
+                '}' + "\n";
     }
 }

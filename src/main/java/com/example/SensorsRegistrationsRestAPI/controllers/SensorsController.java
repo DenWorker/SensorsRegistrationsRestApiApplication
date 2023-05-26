@@ -35,21 +35,26 @@ public class SensorsController {
     }
 
     @GetMapping()
-    public List<SensorDTO> getSensors(){
+    public List<SensorDTO> getSensorsDTO() {
         return sensorsService.findAll().stream().map(this::convertToSensorDTO)
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/notDTO")
+    public List<Sensor> getSensors() {
+        return sensorsService.findAll();
+    }
+
     @GetMapping("/{id}")
-    public SensorDTO findSensorById(@PathVariable int id){
+    public SensorDTO findSensorById(@PathVariable int id) {
         return convertToSensorDTO(sensorsService.findOne(id));
     }
 
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> createSensor(@RequestBody @Valid SensorDTO sensorDTO,
-                                                   BindingResult bindingResult){
-        sensorValidator.validate(convertToSensor(sensorDTO),bindingResult);
-        if (bindingResult.hasErrors()){
+                                                   BindingResult bindingResult) {
+        sensorValidator.validate(convertToSensor(sensorDTO), bindingResult);
+        if (bindingResult.hasErrors()) {
             StringBuilder errorsMsg = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
             errors.forEach(t -> errorsMsg.append(t.getField()).append("-").append(t.getDefaultMessage()).append(";"));
@@ -81,11 +86,11 @@ public class SensorsController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    private Sensor convertToSensor(SensorDTO sensorDTO){
+    private Sensor convertToSensor(SensorDTO sensorDTO) {
         return modelMapper.map(sensorDTO, Sensor.class);
     }
 
-    private SensorDTO convertToSensorDTO(Sensor sensor){
+    private SensorDTO convertToSensorDTO(Sensor sensor) {
         return modelMapper.map(sensor, SensorDTO.class);
     }
 }
