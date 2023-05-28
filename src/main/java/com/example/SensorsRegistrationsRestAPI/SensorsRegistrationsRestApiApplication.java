@@ -31,13 +31,14 @@ public class SensorsRegistrationsRestApiApplication {
         System.out.println("Hello world!");
 
         //sensorsPost();
-        //List<Sensor> sensorList = getSensorsFromServer();
+        List<Sensor> sensorList = getSensorsFromServerNotDTO();
+        System.out.println(sensorList);
 
-        //measurementPost(getSensorsFromServer());
-        //List<MeasurementDTO> measurementDTOList = getMeasurementsFromServer();
-        //System.out.println(measurementDTOList);
+        //measurementPost(getSensorsFromServerNotDTO());
+        List<Measurement> measurementList = getMeasurementsFromServerNotDTO();
+        System.out.println(measurementList);
 
-        createGraphicOfSensorOnID(getMeasurementsFromServerNotDTO(), 8);
+        createGraphicOfSensorOnID(getMeasurementsFromServerNotDTO(), 9);
     }
 
     private static void sensorsPost() {

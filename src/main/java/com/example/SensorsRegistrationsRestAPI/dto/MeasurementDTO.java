@@ -12,16 +12,16 @@ public class MeasurementDTO {
     @NotNull(message = "Value should not be empty!")
     @DecimalMin(value = "-100.0")
     @DecimalMax(value = "100.0")
-    private double value;
+    private Double value;
 
     @NotNull(message = "Raining should not be empty!")
-    private boolean raining;
+    private Boolean raining;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @NotNull(message = "Sensor should not be empty!")
     private Sensor sensor;
 
-    public MeasurementDTO(double value, boolean raining, Sensor sensor) {
+    public MeasurementDTO(Double value, Boolean raining, Sensor sensor) {
         this.value = value;
         this.raining = raining;
         this.sensor = sensor;
@@ -30,19 +30,19 @@ public class MeasurementDTO {
     public MeasurementDTO() {
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean getRaining() {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 

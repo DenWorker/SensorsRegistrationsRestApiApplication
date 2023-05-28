@@ -17,17 +17,17 @@ public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "value")
     @NotNull(message = "Value should not be empty!")
     @DecimalMin(value = "-100.0")
     @DecimalMax(value = "100.0")
-    private double value;
+    private Double value;
 
     @Column(name = "raining")
     @NotNull(message = "Raining should not be empty!")
-    private boolean raining;
+    private Boolean raining;
 
     @Column(name = "measurement_time")
     private LocalDateTime measurementTime;
@@ -41,34 +41,34 @@ public class Measurement {
     public Measurement() {
     }
 
-    public Measurement(int id, double value, boolean raining, Sensor sensor) {
+    public Measurement(Integer id, Double value, Boolean raining, Sensor sensor) {
         this.id = id;
         this.value = value;
         this.raining = raining;
         this.sensor = sensor;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean getRaining() {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 

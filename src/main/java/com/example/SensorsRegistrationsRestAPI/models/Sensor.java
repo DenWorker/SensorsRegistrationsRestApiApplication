@@ -78,4 +78,12 @@ public class Sensor {
     public void setUpdateAt(LocalDateTime update_at) {
         this.updateAt = update_at;
     }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

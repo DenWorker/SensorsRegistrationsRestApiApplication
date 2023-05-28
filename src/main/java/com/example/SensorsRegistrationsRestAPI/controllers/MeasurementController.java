@@ -51,7 +51,7 @@ public class MeasurementController {
 
     @GetMapping("/rainyDaysCount")
     public long getRainyDaysCount() {
-        return measurementsService.findAll().stream().filter(Measurement::isRaining).count();
+        return measurementsService.findAll().stream().filter(Measurement::getRaining).count();
     }
 
     @PostMapping("/add")
